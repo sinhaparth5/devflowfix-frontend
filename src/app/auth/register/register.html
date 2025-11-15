@@ -1,1 +1,176 @@
-<p>register works!</p>
+<nb-layout>
+  <nb-layout-column>
+    <div class="auth-container">
+      <nb-card>
+        <nb-card-header>
+          <h1 class="title">Register</h1>
+          <p class="sub-title">Hello! Create a new account.</p>
+        </nb-card-header>
+
+        <nb-card-body>
+          @if (errors.length > 0) {
+            <nb-alert status="danger" closable (close)="errors = []">
+              @for (error of errors; track $index) {
+                <div>{{ error }}</div>
+              }
+            </nb-alert>
+          }
+
+          @if (messages.length > 0) {
+            <nb-alert status="success" closable (close)="messages = []">
+              @for (message of messages; track $index) {
+                <div>{{ message }}</div>
+              }
+            </nb-alert>
+          }
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-control-group">
+              <label class="label" for="input-name">Full Name:</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="fullName"
+                id="input-name"
+                type="text"
+                placeholder="Full Name"
+                [status]="getInputStatus('fullName')"
+                [attr.aria-invalid]="f['fullName'].invalid && (f['fullName'].dirty || f['fullName'].touched || submitted)"
+              />
+              @if (f['fullName'].invalid && (f['fullName'].dirty || f['fullName'].touched || submitted)) {
+                <div class="alert-message">
+                  @if (f['fullName'].errors?.['required']) {
+                    <div>Full name is required</div>
+                  }
+                  @if (f['fullName'].errors?.['minlength']) {
+                    <div>Full name must be at least 3 characters</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-control-group">
+              <label class="label" for="input-email">Email address:</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="email"
+                id="input-email"
+                type="email"
+                placeholder="Email address"
+                [status]="getInputStatus('email')"
+                [attr.aria-invalid]="f['email'].invalid && (f['email'].dirty || f['email'].touched || submitted)"
+              />
+              @if (f['email'].invalid && (f['email'].dirty || f['email'].touched || submitted)) {
+                <div class="alert-message">
+                  @if (f['email'].errors?.['required']) {
+                    <div>Email is required</div>
+                  }
+                  @if (f['email'].errors?.['email']) {
+                    <div>Email must be valid</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-control-group">
+              <label class="label" for="input-password">Password:</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="password"
+                id="input-password"
+                [type]="showPassword ? 'text' : 'password'"
+                placeholder="Password"
+                [status]="getInputStatus('password')"
+                [attr.aria-invalid]="f['password'].invalid && (f['password'].dirty || f['password'].touched || submitted)"
+              />
+              <button
+                nbButton
+                ghost
+                type="button"
+                class="toggle-password"
+                (click)="toggleShowPassword()"
+                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              >
+                <nb-icon [icon]="showPassword ? 'eye-off-outline' : 'eye-outline'"></nb-icon>
+              </button>
+              @if (f['password'].invalid && (f['password'].dirty || f['password'].touched || submitted)) {
+                <div class="alert-message">
+                  @if (f['password'].errors?.['required']) {
+                    <div>Password is required</div>
+                  }
+                  @if (f['password'].errors?.['minlength']) {
+                    <div>Password must be at least 6 characters</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-control-group">
+              <label class="label" for="input-re-password">Confirm Password:</label>
+              <input
+                nbInput
+                fullWidth
+                formControlName="confirmPassword"
+                id="input-re-password"
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                placeholder="Confirm Password"
+                [status]="getInputStatus('confirmPassword')"
+                [attr.aria-invalid]="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched || submitted)"
+              />
+              <button
+                nbButton
+                ghost
+                type="button"
+                class="toggle-password"
+                (click)="toggleShowConfirmPassword()"
+                [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
+              >
+                <nb-icon [icon]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"></nb-icon>
+              </button>
+              @if (f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched || submitted)) {
+                <div class="alert-message">
+                  @if (f['confirmPassword'].errors?.['required']) {
+                    <div>Please confirm your password</div>
+                  }
+                  @if (f['confirmPassword'].errors?.['passwordMismatch']) {
+                    <div>Passwords do not match</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-control-group accept-group">
+              <nb-checkbox formControlName="agreeTerms">
+                I agree to the <a href="#" class="text-link">Terms & Conditions</a>
+              </nb-checkbox>
+              @if (f['agreeTerms'].invalid && (f['agreeTerms'].dirty || f['agreeTerms'].touched || submitted)) {
+                <div class="alert-message">
+                  @if (f['agreeTerms'].errors?.['required']) {
+                    <div>You must agree to the terms and conditions</div>
+                  }
+                </div>
+              }
+            </div>
+
+            <button
+              nbButton
+              fullWidth
+              status="primary"
+              type="submit"
+              [disabled]="loading"
+              [class.btn-pulse]="loading"
+            >
+              {{ loading ? 'Creating Account...' : 'Register' }}
+            </button>
+          </form>
+
+          <section class="another-action" aria-label="Sign In">
+            Already have an account? <a class="text-link" routerLink="../login">Log in</a>
+          </section>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-layout-column>
+</nb-layout>
