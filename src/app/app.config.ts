@@ -13,12 +13,14 @@ import {
   NbSidebarModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { provideAuth } from './auth/auth.config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
+    provideAuth(),
     provideHttpClient(),
     provideAnimationsAsync(),
     importProvidersFrom(
