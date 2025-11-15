@@ -33,7 +33,7 @@ import {
   styleUrl: './register.css',
 })
 export class Register implements OnInit {
-  registerFrom!: FormGroup;
+  registerForm!: FormGroup;
   submitted = false;
   loading = false;
   showPassword = false;
@@ -49,7 +49,7 @@ export class Register implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.registerFrom = this.formBuilder.group(
+    this.registerForm = this.formBuilder.group(
       {
         fullName: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
@@ -64,7 +64,7 @@ export class Register implements OnInit {
   }
 
   get f() {
-    return this.registerFrom.controls;
+    return this.registerForm.controls;
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -89,7 +89,7 @@ export class Register implements OnInit {
   }
 
   getInputStatus(fieldName: string): string {
-    const field = this.registerFrom.get(fieldName);
+    const field = this.registerForm.get(fieldName);
     if (field?.invalid && (field?.dirty || field?.touched || this.submitted)) {
       return 'danger';
     }
@@ -112,13 +112,13 @@ export class Register implements OnInit {
     this.errors = [];
     this.messages = [];
 
-    if (this.registerFrom.invalid) {
+    if (this.registerForm.invalid) {
       return;
     }
 
     this.loading = true;
 
-    const { confirmPassword, agreeTerms, ...registerData } = this.registerFrom.value;
+    const { confirmPassword, agreeTerms, ...registerData } = this.registerForm.value;
 
     this.authService
       .register('email', registerData)
