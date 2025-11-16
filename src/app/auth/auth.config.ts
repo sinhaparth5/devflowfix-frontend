@@ -4,6 +4,7 @@ import {
     NbPasswordAuthStrategy,
     NbAuthJWTToken,
 } from '@nebular/auth';
+import { environment } from "../../environments/environment";
 
 export function provideAuth() {
     return importProvidersFrom(
@@ -15,17 +16,17 @@ export function provideAuth() {
                         class: NbAuthJWTToken,
                         key: 'token',
                     },
-                    baseEndpoint: 'http://localhost:3000/api',
+                    baseEndpoint: environment.apiUrl,
                     login: {
-                        endpoint: '/auth/login',
+                        endpoint: environment.endpoints.login,
                         method: 'post',
                     },
                     register: {
-                        endpoint: '/auth/register',
+                        endpoint: environment.endpoints.logout,
                         method: 'post',
                     },
                     logout: {
-                        endpoint: '/auth/logout',
+                        endpoint: environment.endpoints.logout,
                         method: 'post',
                     },
                     requestPass: {

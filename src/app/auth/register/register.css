@@ -46,7 +46,6 @@ nb-card-body {
 .form-control-group .toggle-password {
   position: absolute;
   right: 0.5rem;
-  top: 2.25rem;
   padding: 0.5rem;
   cursor: pointer;
   background: transparent;
