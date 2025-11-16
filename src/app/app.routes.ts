@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AUTH_ROUTES } from './auth/auth-routing-module';
 import { Home } from './pages/home/home';
 
 export const routes: Routes = [
@@ -9,7 +8,9 @@ export const routes: Routes = [
     },
     {
         path: 'auth',
-        children: AUTH_ROUTES,
+        loadChildren: () =>
+            import('./auth/auth-routing-module')
+            .then((m) => m.AUTH_ROUTES),
     },
     {
         path: '**',
