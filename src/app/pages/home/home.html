@@ -1,0 +1,308 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <div class="header-container">
+      <div class="logo">
+        <nb-icon icon="flash-outline" class="logo-icon"></nb-icon>
+        <span class="logo-text">DevFlowFix</span>
+        <nb-badge text="BETA" status="info" position="top right"></nb-badge>
+      </div>
+      <nav class="nav-menu">
+        <a (click)="scrollToSection('features')" class="nav-link">Features</a>
+        <a (click)="scrollToSection('how-it-works')" class="nav-link">How It Works</a>
+        <a (click)="scrollToSection('integrations')" class="nav-link">Integrations</a>
+        <button nbButton status="basic" size="small" (click)="navigateToLogin()">
+          Login
+        </button>
+        <button nbButton status="primary" size="small" (click)="navigateToRegister()">
+          <nb-icon icon="arrow-forward-outline"></nb-icon>
+          Get Started
+        </button>
+      </nav>
+    </div>
+  </nb-layout-header>
+
+  <nb-layout-column class="no-padding">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <nb-icon icon="flash-outline"></nb-icon>
+            <span>Now with NVIDIA NIM Integration</span>
+          </div>
+          
+          <h1 class="hero-title">
+            Autonomous AI Agent for
+            <span class="gradient-text">CI/CD Failure Resolution</span>
+          </h1>
+          
+          <p class="hero-description">
+            DevFlowFix automatically detects, analyzes, and resolves CI/CD failures in real-time,
+            fixing <strong>75% of deployment issues</strong> in under <strong>8 minutes</strong>.
+          </p>
+          
+          <div class="hero-actions">
+            <button nbButton status="primary" size="giant" (click)="navigateToRegister()">
+              <nb-icon icon="play-circle-outline"></nb-icon>
+              Start Free Trial
+            </button>
+            <button nbButton status="basic" size="giant" outline>
+              <nb-icon icon="video-outline"></nb-icon>
+              Watch Demo
+            </button>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="hero-stats">
+            @for (stat of stats; track stat.label) {
+              <nb-card class="stat-card" [status]="'basic'">
+                <nb-card-body>
+                  <div class="stat-icon">
+                    <nb-icon [icon]="stat.icon"></nb-icon>
+                  </div>
+                  <div class="stat-content">
+                    <div class="stat-value">{{ stat.value }}</div>
+                    <div class="stat-label">{{ stat.label }}</div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            }
+          </div>
+        </div>
+
+        <!-- Code Terminal Demo -->
+        <div class="hero-visual">
+          <nb-card class="terminal-card" status="primary">
+            <nb-card-header>
+              <div class="terminal-header">
+                <div class="terminal-dots">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <span class="terminal-title">devflowfix-agent.log</span>
+              </div>
+            </nb-card-header>
+            <nb-card-body>
+              <div class="terminal-content">
+                <div class="terminal-line">
+                  <span class="timestamp">[21:45:32]</span>
+                  <nb-badge text="INFO" status="info" position="top left"></nb-badge>
+                  <span class="log-text">Webhook received from GitHub Actions</span>
+                </div>
+                <div class="terminal-line">
+                  <span class="timestamp">[21:45:33]</span>
+                  <nb-badge text="ERROR" status="danger" position="top left"></nb-badge>
+                  <span class="log-text">Deployment failed: Pod CrashLoopBackOff</span>
+                </div>
+                <div class="terminal-line">
+                  <span class="timestamp">[21:45:34]</span>
+                  <nb-badge text="AI" status="warning" position="top left"></nb-badge>
+                  <span class="log-text">Analyzing failure with NVIDIA NIM...</span>
+                </div>
+                <div class="terminal-line">
+                  <span class="timestamp">[21:45:36]</span>
+                  <nb-badge text="AI" status="warning" position="top left"></nb-badge>
+                  <span class="log-text">Root cause: Memory limit exceeded</span>
+                </div>
+                <div class="terminal-line">
+                  <span class="timestamp">[21:45:37]</span>
+                  <nb-badge text="FIX" status="primary" position="top left"></nb-badge>
+                  <span class="log-text">Applying remediation: Restart pod</span>
+                </div>
+                <div class="terminal-line success">
+                  <span class="timestamp">[21:45:42]</span>
+                  <nb-badge text="SUCCESS" status="success" position="top left"></nb-badge>
+                  <span class="log-text">✓ Deployment successful</span>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <div class="section-container">
+        <div class="section-header">
+          <nb-badge text="✨ Features" status="primary" position="top left"></nb-badge>
+          <h2 class="section-title">What DevFlowFix Does</h2>
+          <p class="section-description">
+            Intelligent automation that keeps your deployments running smoothly 24/7
+          </p>
+        </div>
+
+        <div class="features-grid">
+          @for (feature of features; track feature.title) {
+            <nb-card [status]="feature.status" class="feature-card">
+              <nb-card-header>
+                <div class="feature-icon-wrapper">
+                  <nb-icon [icon]="feature.icon" class="feature-icon"></nb-icon>
+                </div>
+              </nb-card-header>
+              <nb-card-body>
+                <h3 class="feature-title">{{ feature.title }}</h3>
+                <p class="feature-description">{{ feature.description }}</p>
+              </nb-card-body>
+            </nb-card>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+      <div class="section-container">
+        <div class="section-header">
+          <nb-badge text="⚙️ Process" status="info" position="top left"></nb-badge>
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-description">
+            Four simple steps to autonomous CI/CD recovery
+          </p>
+        </div>
+
+        <div class="steps-container">
+          @for (step of steps; track step.number) {
+            <nb-card class="step-card" status="basic">
+              <nb-card-body>
+                <div class="step-header">
+                  <div class="step-number">{{ step.number }}</div>
+                  <nb-icon [icon]="step.icon" class="step-icon"></nb-icon>
+                </div>
+                <h3 class="step-title">{{ step.title }}</h3>
+                <p class="step-description">{{ step.description }}</p>
+              </nb-card-body>
+            </nb-card>
+            @if (step.number < steps.length) {
+              <div class="step-arrow">
+                <nb-icon icon="arrow-forward-outline"></nb-icon>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations Section -->
+    <section id="integrations" class="integrations-section">
+      <div class="section-container">
+        <div class="section-header">
+          <nb-badge text="🔌 Integrations" status="success" position="top left"></nb-badge>
+          <h2 class="section-title">Seamless Integrations</h2>
+          <p class="section-description">
+            Works with your existing CI/CD stack out of the box
+          </p>
+        </div>
+
+        <div class="integrations-grid">
+          @for (integration of integrations; track integration.name) {
+            <nb-card class="integration-card" status="basic">
+              <nb-card-body>
+                <nb-icon [icon]="integration.icon" class="integration-icon"></nb-icon>
+                <h4 class="integration-name">{{ integration.name }}</h4>
+              </nb-card-body>
+            </nb-card>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="section-container">
+        <nb-card status="primary" class="cta-card">
+          <nb-card-body>
+            <div class="cta-content">
+              <nb-icon icon="flash-outline" class="cta-icon"></nb-icon>
+              <h2 class="cta-title">Ready to Fix Your CI/CD Pipeline?</h2>
+              <p class="cta-description">
+                Start your free trial today and experience autonomous deployment recovery.<br />
+                No credit card required. Cancel anytime.
+              </p>
+              <div class="cta-actions">
+                <button nbButton status="success" size="giant" (click)="navigateToRegister()">
+                  <nb-icon icon="arrow-forward-outline"></nb-icon>
+                  Start Free Trial
+                </button>
+                <button nbButton status="basic" size="giant" outline (click)="navigateToLogin()">
+                  Sign In
+                </button>
+              </div>
+              <div class="cta-features">
+                <span class="cta-feature">
+                  <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                  14-day free trial
+                </span>
+                <span class="cta-feature">
+                  <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                  No credit card
+                </span>
+                <span class="cta-feature">
+                  <nb-icon icon="checkmark-circle-outline"></nb-icon>
+                  Cancel anytime
+                </span>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </section>
+  </nb-layout-column>
+
+  <nb-layout-footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <nb-icon icon="flash-outline"></nb-icon>
+            <span>DevFlowFix</span>
+          </div>
+          <p class="brand-tagline">Autonomous CI/CD failure resolution powered by AI</p>
+          <div class="social-links">
+            <nb-actions size="medium">
+              <nb-action icon="github-outline" link="#"></nb-action>
+              <nb-action icon="twitter-outline" link="#"></nb-action>
+              <nb-action icon="linkedin-outline" link="#"></nb-action>
+            </nb-actions>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Product</h4>
+            <a (click)="scrollToSection('features')">Features</a>
+            <a (click)="scrollToSection('how-it-works')">How It Works</a>
+            <a (click)="scrollToSection('integrations')">Integrations</a>
+            <a href="#">Pricing</a>
+          </div>
+          
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <a href="#">Documentation</a>
+            <a href="#">API Reference</a>
+            <a href="#">Blog</a>
+            <a href="#">Support</a>
+          </div>
+          
+          <div class="footer-column">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Careers</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 DevFlowFix. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </nb-layout-footer>
+</nb-layout>
