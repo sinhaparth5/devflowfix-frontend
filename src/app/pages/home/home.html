@@ -1,27 +1,27 @@
-<nb-layout>
-  <nb-layout-header fixed>
-    <div class="header-container">
-      <div class="logo">
-        <nb-icon icon="flash-outline" class="logo-icon"></nb-icon>
-        <span class="logo-text">DevFlowFix</span>
-        <nb-badge text="BETA" status="info" position="top right"></nb-badge>
-      </div>
-      <nav class="nav-menu">
-        <a (click)="scrollToSection('features')" class="nav-link">Features</a>
-        <a (click)="scrollToSection('how-it-works')" class="nav-link">How It Works</a>
-        <a (click)="scrollToSection('integrations')" class="nav-link">Integrations</a>
-        <button nbButton status="basic" size="small" (click)="navigateToLogin()">
-          Login
-        </button>
-        <button nbButton status="primary" size="small" (click)="navigateToRegister()">
-          <nb-icon icon="arrow-forward-outline"></nb-icon>
-          Get Started
-        </button>
-      </nav>
+<!-- Header -->
+<header class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <nb-icon icon="flash-outline" class="brand-icon"></nb-icon>
+      <span class="brand-text">DevFlowFix</span>
+      <nb-badge text="BETA" status="info" position="top right"></nb-badge>
     </div>
-  </nb-layout-header>
+    <nav class="navbar-menu">
+      <a (click)="scrollToSection('features')" class="nav-link">Features</a>
+      <a (click)="scrollToSection('how-it-works')" class="nav-link">How It Works</a>
+      <a (click)="scrollToSection('integrations')" class="nav-link">Integrations</a>
+      <button nbButton status="basic" size="small" (click)="navigateToLogin()">
+        Login
+      </button>
+      <button nbButton status="primary" size="small" (click)="navigateToRegister()">
+        <nb-icon icon="arrow-forward-outline"></nb-icon>
+        Get Started
+      </button>
+    </nav>
+  </div>
+</header>
 
-  <nb-layout-column class="no-padding">
+<main class="main-content">
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-container">
@@ -248,61 +248,61 @@
         </nb-card>
       </div>
     </section>
-  </nb-layout-column>
+</main>
 
-  <nb-layout-footer>
-    <div class="footer-container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <div class="brand-logo">
-            <nb-icon icon="flash-outline"></nb-icon>
-            <span>DevFlowFix</span>
-          </div>
-          <p class="brand-tagline">Autonomous CI/CD failure resolution powered by AI</p>
-          <div class="social-links">
-            <nb-actions size="medium">
-              <nb-action icon="github-outline" link="#"></nb-action>
-              <nb-action icon="twitter-outline" link="#"></nb-action>
-              <nb-action icon="linkedin-outline" link="#"></nb-action>
-            </nb-actions>
-          </div>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <nb-icon icon="flash-outline"></nb-icon>
+          <span>DevFlowFix</span>
         </div>
-        
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>Product</h4>
-            <a (click)="scrollToSection('features')">Features</a>
-            <a (click)="scrollToSection('how-it-works')">How It Works</a>
-            <a (click)="scrollToSection('integrations')">Integrations</a>
-            <a href="#">Pricing</a>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Resources</h4>
-            <a href="#">Documentation</a>
-            <a href="#">API Reference</a>
-            <a href="#">Blog</a>
-            <a href="#">Support</a>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Company</h4>
-            <a href="#">About</a>
-            <a href="#">Careers</a>
-            <a href="#">Contact</a>
-            <a href="#">Privacy</a>
-          </div>
+        <p class="brand-tagline">Autonomous CI/CD failure resolution powered by AI</p>
+        <div class="social-links">
+          <nb-actions size="medium">
+            <nb-action icon="github-outline" link="#"></nb-action>
+            <nb-action icon="twitter-outline" link="#"></nb-action>
+            <nb-action icon="linkedin-outline" link="#"></nb-action>
+          </nb-actions>
         </div>
       </div>
       
-      <div class="footer-bottom">
-        <p>&copy; 2025 DevFlowFix. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="#">Terms of Service</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Cookie Policy</a>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Product</h4>
+          <a (click)="scrollToSection('features')">Features</a>
+          <a (click)="scrollToSection('how-it-works')">How It Works</a>
+          <a (click)="scrollToSection('integrations')">Integrations</a>
+          <a href="#">Pricing</a>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="#">Documentation</a>
+          <a href="#">API Reference</a>
+          <a href="#">Blog</a>
+          <a href="#">Support</a>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+          <a href="#">Privacy</a>
         </div>
       </div>
     </div>
-  </nb-layout-footer>
-</nb-layout>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 DevFlowFix. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
