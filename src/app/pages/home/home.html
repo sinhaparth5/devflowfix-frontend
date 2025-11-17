@@ -1,308 +1,394 @@
-<nb-layout>
-  <nb-layout-header fixed>
-    <div class="header-container">
-      <div class="logo">
-        <nb-icon icon="flash-outline" class="logo-icon"></nb-icon>
-        <span class="logo-text">DevFlowFix</span>
-        <nb-badge text="BETA" status="info" position="top right"></nb-badge>
-      </div>
-      <nav class="nav-menu">
-        <a (click)="scrollToSection('features')" class="nav-link">Features</a>
-        <a (click)="scrollToSection('how-it-works')" class="nav-link">How It Works</a>
-        <a (click)="scrollToSection('integrations')" class="nav-link">Integrations</a>
-        <button nbButton status="basic" size="small" (click)="navigateToLogin()">
-          Login
-        </button>
-        <button nbButton status="primary" size="small" (click)="navigateToRegister()">
-          <nb-icon icon="arrow-forward-outline"></nb-icon>
-          Get Started
-        </button>
-      </nav>
+<!-- Navbar -->
+<div class="navbar bg-base-100 shadow-lg fixed top-0 z-50">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <label tabindex="0" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+        </svg>
+      </label>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+        <li><a (click)="scrollToSection('features')">Features</a></li>
+        <li><a (click)="scrollToSection('how-it-works')">How It Works</a></li>
+        <li><a (click)="scrollToSection('integrations')">Integrations</a></li>
+      </ul>
     </div>
-  </nb-layout-header>
+    <a class="btn btn-ghost normal-case text-xl">
+      <span class="text-3xl">⚡</span>
+      <span class="text-orange-600 font-bold">DevFlowFix</span>
+      <div class="badge badge-info badge-sm">BETA</div>
+    </a>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1">
+      <li><a (click)="scrollToSection('features')">Features</a></li>
+      <li><a (click)="scrollToSection('how-it-works')">How It Works</a></li>
+      <li><a (click)="scrollToSection('integrations')">Integrations</a></li>
+    </ul>
+  </div>
+  <div class="navbar-end gap-2">
+    <button class="btn btn-ghost btn-sm" (click)="navigateToLogin()">Login</button>
+    <button class="btn btn-warning btn-sm" (click)="navigateToRegister()">
+      Get Started
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </button>
+  </div>
+</div>
 
-  <nb-layout-column class="no-padding">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <nb-icon icon="flash-outline"></nb-icon>
-            <span>Now with NVIDIA NIM Integration</span>
-          </div>
-          
-          <h1 class="hero-title">
-            Autonomous AI Agent for
-            <span class="gradient-text">CI/CD Failure Resolution</span>
-          </h1>
-          
-          <p class="hero-description">
-            DevFlowFix automatically detects, analyzes, and resolves CI/CD failures in real-time,
-            fixing <strong>75% of deployment issues</strong> in under <strong>8 minutes</strong>.
-          </p>
-          
-          <div class="hero-actions">
-            <button nbButton status="primary" size="giant" (click)="navigateToRegister()">
-              <nb-icon icon="play-circle-outline"></nb-icon>
-              Start Free Trial
-            </button>
-            <button nbButton status="basic" size="giant" outline>
-              <nb-icon icon="video-outline"></nb-icon>
-              Watch Demo
-            </button>
-          </div>
+<!-- Hero Section -->
+<div class="hero min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 pt-20">
+  <div class="hero-content flex-col lg:flex-row-reverse max-w-7xl">
+    <!-- Terminal Demo -->
+    <div class="mockup-code shadow-2xl lg:w-1/2 animate-fade-in-right">
+      <pre data-prefix="$" class="text-success"><code>webhook received: GitHub Actions</code></pre>
+      <pre data-prefix="!" class="text-error"><code>deployment failed: Pod CrashLoopBackOff</code></pre>
+      <pre data-prefix="🤖" class="text-warning"><code>analyzing failure with NVIDIA NIM...</code></pre>
+      <pre data-prefix="🤖" class="text-warning"><code>root cause: memory limit exceeded</code></pre>
+      <pre data-prefix="🔧" class="text-info"><code>applying fix: restart pod</code></pre>
+      <pre data-prefix="✓" class="text-success"><code>deployment successful!</code></pre>
+    </div>
 
-          <!-- Stats Cards -->
-          <div class="hero-stats">
-            @for (stat of stats; track stat.label) {
-              <nb-card class="stat-card" [status]="'basic'">
-                <nb-card-body>
-                  <div class="stat-icon">
-                    <nb-icon [icon]="stat.icon"></nb-icon>
-                  </div>
-                  <div class="stat-content">
-                    <div class="stat-value">{{ stat.value }}</div>
-                    <div class="stat-label">{{ stat.label }}</div>
-                  </div>
-                </nb-card-body>
-              </nb-card>
-            }
-          </div>
+    <!-- Hero Content -->
+    <div class="lg:w-1/2 animate-fade-in-left">
+      <div class="badge badge-warning badge-lg mb-4">
+        <span class="text-xl mr-2">🚀</span> Now with NVIDIA NIM Integration
+      </div>
+      <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+        Autonomous AI Agent for
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700">
+          CI/CD Failure Resolution
+        </span>
+      </h1>
+      <p class="py-6 text-lg text-gray-600">
+        DevFlowFix automatically detects, analyzes, and resolves CI/CD failures in real-time,
+        fixing <span class="font-bold text-orange-600">75% of deployment issues</span> in under
+        <span class="font-bold text-orange-600">8 minutes</span>.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button class="btn btn-warning btn-lg" (click)="navigateToRegister()">
+          <span class="text-xl mr-2">▶️</span> Start Free Trial
+        </button>
+        <button class="btn btn-outline btn-lg">
+          <span class="text-xl mr-2">🎥</span> Watch Demo
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats stats-vertical lg:stats-horizontal shadow mt-8 w-full">
+        <div class="stat">
+          <div class="stat-figure text-orange-500 text-3xl">✓</div>
+          <div class="stat-value text-orange-600">75%</div>
+          <div class="stat-title">Failures Auto-Fixed</div>
         </div>
-
-        <!-- Code Terminal Demo -->
-        <div class="hero-visual">
-          <nb-card class="terminal-card" status="primary">
-            <nb-card-header>
-              <div class="terminal-header">
-                <div class="terminal-dots">
-                  <span class="dot red"></span>
-                  <span class="dot yellow"></span>
-                  <span class="dot green"></span>
-                </div>
-                <span class="terminal-title">devflowfix-agent.log</span>
-              </div>
-            </nb-card-header>
-            <nb-card-body>
-              <div class="terminal-content">
-                <div class="terminal-line">
-                  <span class="timestamp">[21:45:32]</span>
-                  <nb-badge text="INFO" status="info" position="top left"></nb-badge>
-                  <span class="log-text">Webhook received from GitHub Actions</span>
-                </div>
-                <div class="terminal-line">
-                  <span class="timestamp">[21:45:33]</span>
-                  <nb-badge text="ERROR" status="danger" position="top left"></nb-badge>
-                  <span class="log-text">Deployment failed: Pod CrashLoopBackOff</span>
-                </div>
-                <div class="terminal-line">
-                  <span class="timestamp">[21:45:34]</span>
-                  <nb-badge text="AI" status="warning" position="top left"></nb-badge>
-                  <span class="log-text">Analyzing failure with NVIDIA NIM...</span>
-                </div>
-                <div class="terminal-line">
-                  <span class="timestamp">[21:45:36]</span>
-                  <nb-badge text="AI" status="warning" position="top left"></nb-badge>
-                  <span class="log-text">Root cause: Memory limit exceeded</span>
-                </div>
-                <div class="terminal-line">
-                  <span class="timestamp">[21:45:37]</span>
-                  <nb-badge text="FIX" status="primary" position="top left"></nb-badge>
-                  <span class="log-text">Applying remediation: Restart pod</span>
-                </div>
-                <div class="terminal-line success">
-                  <span class="timestamp">[21:45:42]</span>
-                  <nb-badge text="SUCCESS" status="success" position="top left"></nb-badge>
-                  <span class="log-text">✓ Deployment successful</span>
-                </div>
-              </div>
-            </nb-card-body>
-          </nb-card>
+        <div class="stat">
+          <div class="stat-figure text-orange-500 text-3xl">⏱️</div>
+          <div class="stat-value text-orange-600">&lt; 8min</div>
+          <div class="stat-title">Average Fix Time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-figure text-orange-500 text-3xl">🔄</div>
+          <div class="stat-value text-orange-600">24/7</div>
+          <div class="stat-title">Autonomous</div>
+        </div>
+        <div class="stat">
+          <div class="stat-figure text-orange-500 text-3xl">📊</div>
+          <div class="stat-value text-orange-600">99.9%</div>
+          <div class="stat-title">Uptime</div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
 
-    <!-- Features Section -->
-    <section id="features" class="features-section">
-      <div class="section-container">
-        <div class="section-header">
-          <nb-badge text="✨ Features" status="primary" position="top left"></nb-badge>
-          <h2 class="section-title">What DevFlowFix Does</h2>
-          <p class="section-description">
-            Intelligent automation that keeps your deployments running smoothly 24/7
-          </p>
-        </div>
+<!-- Features Section -->
+<section id="features" class="py-20 bg-base-200">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 animate-fade-in">
+      <div class="badge badge-warning badge-lg mb-4">✨ Features</div>
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">What DevFlowFix Does</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Intelligent automation that keeps your deployments running smoothly 24/7
+      </p>
+    </div>
 
-        <div class="features-grid">
-          @for (feature of features; track feature.title) {
-            <nb-card [status]="feature.status" class="feature-card">
-              <nb-card-header>
-                <div class="feature-icon-wrapper">
-                  <nb-icon [icon]="feature.icon" class="feature-icon"></nb-icon>
-                </div>
-              </nb-card-header>
-              <nb-card-body>
-                <h3 class="feature-title">{{ feature.title }}</h3>
-                <p class="feature-description">{{ feature.description }}</p>
-              </nb-card-body>
-            </nb-card>
-          }
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature Cards -->
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="card-body">
+          <div class="text-6xl mb-4">⚡</div>
+          <h3 class="card-title text-orange-600">Real-Time Detection</h3>
+          <p class="text-gray-600">Instantly detects CI/CD failures from GitHub Actions, ArgoCD, and Kubernetes webhooks with millisecond precision.</p>
         </div>
       </div>
-    </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works-section">
-      <div class="section-container">
-        <div class="section-header">
-          <nb-badge text="⚙️ Process" status="info" position="top left"></nb-badge>
-          <h2 class="section-title">How It Works</h2>
-          <p class="section-description">
-            Four simple steps to autonomous CI/CD recovery
-          </p>
-        </div>
-
-        <div class="steps-container">
-          @for (step of steps; track step.number) {
-            <nb-card class="step-card" status="basic">
-              <nb-card-body>
-                <div class="step-header">
-                  <div class="step-number">{{ step.number }}</div>
-                  <nb-icon [icon]="step.icon" class="step-icon"></nb-icon>
-                </div>
-                <h3 class="step-title">{{ step.title }}</h3>
-                <p class="step-description">{{ step.description }}</p>
-              </nb-card-body>
-            </nb-card>
-            @if (step.number < steps.length) {
-              <div class="step-arrow">
-                <nb-icon icon="arrow-forward-outline"></nb-icon>
-              </div>
-            }
-          }
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="card-body">
+          <div class="text-6xl mb-4">🧠</div>
+          <h3 class="card-title text-orange-600">AI-Powered Analysis</h3>
+          <p class="text-gray-600">Uses NVIDIA NIM and RAG to intelligently analyze failure root causes with 95% accuracy.</p>
         </div>
       </div>
-    </section>
 
-    <!-- Integrations Section -->
-    <section id="integrations" class="integrations-section">
-      <div class="section-container">
-        <div class="section-header">
-          <nb-badge text="🔌 Integrations" status="success" position="top left"></nb-badge>
-          <h2 class="section-title">Seamless Integrations</h2>
-          <p class="section-description">
-            Works with your existing CI/CD stack out of the box
-          </p>
-        </div>
-
-        <div class="integrations-grid">
-          @for (integration of integrations; track integration.name) {
-            <nb-card class="integration-card" status="basic">
-              <nb-card-body>
-                <nb-icon [icon]="integration.icon" class="integration-icon"></nb-icon>
-                <h4 class="integration-name">{{ integration.name }}</h4>
-              </nb-card-body>
-            </nb-card>
-          }
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="card-body">
+          <div class="text-6xl mb-4">🔧</div>
+          <h3 class="card-title text-orange-600">Automatic Remediation</h3>
+          <p class="text-gray-600">Safely executes fixes like workflow reruns, pod restarts, and sync operations without human intervention.</p>
         </div>
       </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="section-container">
-        <nb-card status="primary" class="cta-card">
-          <nb-card-body>
-            <div class="cta-content">
-              <nb-icon icon="flash-outline" class="cta-icon"></nb-icon>
-              <h2 class="cta-title">Ready to Fix Your CI/CD Pipeline?</h2>
-              <p class="cta-description">
-                Start your free trial today and experience autonomous deployment recovery.<br />
-                No credit card required. Cancel anytime.
-              </p>
-              <div class="cta-actions">
-                <button nbButton status="success" size="giant" (click)="navigateToRegister()">
-                  <nb-icon icon="arrow-forward-outline"></nb-icon>
-                  Start Free Trial
-                </button>
-                <button nbButton status="basic" size="giant" outline (click)="navigateToLogin()">
-                  Sign In
-                </button>
-              </div>
-              <div class="cta-features">
-                <span class="cta-feature">
-                  <nb-icon icon="checkmark-circle-outline"></nb-icon>
-                  14-day free trial
-                </span>
-                <span class="cta-feature">
-                  <nb-icon icon="checkmark-circle-outline"></nb-icon>
-                  No credit card
-                </span>
-                <span class="cta-feature">
-                  <nb-icon icon="checkmark-circle-outline"></nb-icon>
-                  Cancel anytime
-                </span>
-              </div>
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="card-body">
+          <div class="text-6xl mb-4">📈</div>
+          <h3 class="card-title text-orange-600">Continuous Learning</h3>
+          <p class="text-gray-600">Learns from every outcome to improve confidence scoring and fix accuracy over time.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="card-body">
+          <div class="text-6xl mb-4">🛡️</div>
+          <h3 class="card-title text-orange-600">Safe Operations</h3>
+          <p class="text-gray-600">Confidence-based execution ensures only high-probability fixes are applied automatically.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="card-body">
+          <div class="text-6xl mb-4">⚡</div>
+          <h3 class="card-title text-orange-600">Lightning Fast</h3>
+          <p class="text-gray-600">Resolves 75% of failures in under 8 minutes, keeping your deployments moving.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-20 bg-base-100">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 animate-fade-in">
+      <div class="badge badge-info badge-lg mb-4">⚙️ Process</div>
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">How It Works</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Four simple steps to autonomous CI/CD recovery
+      </p>
+    </div>
+
+    <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+      <li>
+        <div class="timeline-middle">
+          <div class="avatar placeholder">
+            <div class="bg-orange-500 text-white rounded-full w-16">
+              <span class="text-2xl">📥</span>
             </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </section>
-  </nb-layout-column>
+          </div>
+        </div>
+        <div class="timeline-start md:text-end mb-10">
+          <div class="text-lg font-black text-orange-600">Step 1</div>
+          <div class="text-2xl font-bold">Receive Webhooks</div>
+          <div class="text-gray-600 mt-2">
+            Integrates with GitHub Actions, ArgoCD, and Kubernetes to receive real-time failure notifications.
+          </div>
+        </div>
+        <hr class="bg-orange-500"/>
+      </li>
+      <li>
+        <hr class="bg-orange-500"/>
+        <div class="timeline-middle">
+          <div class="avatar placeholder">
+            <div class="bg-orange-500 text-white rounded-full w-16">
+              <span class="text-2xl">🤖</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-end mb-10">
+          <div class="text-lg font-black text-orange-600">Step 2</div>
+          <div class="text-2xl font-bold">AI Analysis</div>
+          <div class="text-gray-600 mt-2">
+            Uses NVIDIA NIM and RAG to analyze logs, identify root causes, and determine optimal solutions.
+          </div>
+        </div>
+        <hr class="bg-orange-500"/>
+      </li>
+      <li>
+        <hr class="bg-orange-500"/>
+        <div class="timeline-middle">
+          <div class="avatar placeholder">
+            <div class="bg-orange-500 text-white rounded-full w-16">
+              <span class="text-2xl">🔨</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-start md:text-end mb-10">
+          <div class="text-lg font-black text-orange-600">Step 3</div>
+          <div class="text-2xl font-bold">Safe Remediation</div>
+          <div class="text-gray-600 mt-2">
+            Executes fixes like workflow reruns, pod restarts, and ArgoCD sync operations with confidence scoring.
+          </div>
+        </div>
+        <hr class="bg-orange-500"/>
+      </li>
+      <li>
+        <hr class="bg-orange-500"/>
+        <div class="timeline-middle">
+          <div class="avatar placeholder">
+            <div class="bg-orange-500 text-white rounded-full w-16">
+              <span class="text-2xl">📚</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-end mb-10">
+          <div class="text-lg font-black text-orange-600">Step 4</div>
+          <div class="text-2xl font-bold">Learn & Improve</div>
+          <div class="text-gray-600 mt-2">
+            Continuously learns from outcomes to improve accuracy and build knowledge base for future failures.
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
 
-  <nb-layout-footer>
-    <div class="footer-container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <div class="brand-logo">
-            <nb-icon icon="flash-outline"></nb-icon>
-            <span>DevFlowFix</span>
-          </div>
-          <p class="brand-tagline">Autonomous CI/CD failure resolution powered by AI</p>
-          <div class="social-links">
-            <nb-actions size="medium">
-              <nb-action icon="github-outline" link="#"></nb-action>
-              <nb-action icon="twitter-outline" link="#"></nb-action>
-              <nb-action icon="linkedin-outline" link="#"></nb-action>
-            </nb-actions>
-          </div>
-        </div>
-        
-        <div class="footer-links">
-          <div class="footer-column">
-            <h4>Product</h4>
-            <a (click)="scrollToSection('features')">Features</a>
-            <a (click)="scrollToSection('how-it-works')">How It Works</a>
-            <a (click)="scrollToSection('integrations')">Integrations</a>
-            <a href="#">Pricing</a>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Resources</h4>
-            <a href="#">Documentation</a>
-            <a href="#">API Reference</a>
-            <a href="#">Blog</a>
-            <a href="#">Support</a>
-          </div>
-          
-          <div class="footer-column">
-            <h4>Company</h4>
-            <a href="#">About</a>
-            <a href="#">Careers</a>
-            <a href="#">Contact</a>
-            <a href="#">Privacy</a>
-          </div>
+<!-- Integrations Section -->
+<section id="integrations" class="py-20 bg-base-200">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 animate-fade-in">
+      <div class="badge badge-success badge-lg mb-4">🔌 Integrations</div>
+      <h2 class="text-4xl lg:text-5xl font-bold mb-4">Seamless Integrations</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Works with your existing CI/CD stack out of the box
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-5xl mb-2">🐙</div>
+          <h4 class="font-semibold">GitHub Actions</h4>
         </div>
       </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; 2025 DevFlowFix. All rights reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="#">Terms of Service</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Cookie Policy</a>
+      <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-5xl mb-2">🐙</div>
+          <h4 class="font-semibold">ArgoCD</h4>
+        </div>
+      </div>
+      <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-5xl mb-2">☸️</div>
+          <h4 class="font-semibold">Kubernetes</h4>
+        </div>
+      </div>
+      <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-5xl mb-2">🎮</div>
+          <h4 class="font-semibold">NVIDIA NIM</h4>
+        </div>
+      </div>
+      <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-5xl mb-2">🐳</div>
+          <h4 class="font-semibold">Docker</h4>
+        </div>
+      </div>
+      <div class="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+        <div class="card-body items-center text-center p-6">
+          <div class="text-5xl mb-2">🔧</div>
+          <h4 class="font-semibold">Jenkins</h4>
         </div>
       </div>
     </div>
-  </nb-layout-footer>
-</nb-layout>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-orange-500 to-orange-700">
+  <div class="container mx-auto px-4">
+    <div class="card bg-base-100 shadow-2xl max-w-4xl mx-auto">
+      <div class="card-body text-center p-12">
+        <div class="text-6xl mb-6">⚡</div>
+        <h2 class="card-title text-4xl lg:text-5xl font-bold justify-center mb-4">
+          Ready to Fix Your CI/CD Pipeline?
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+          Start your free trial today and experience autonomous deployment recovery.<br />
+          No credit card required. Cancel anytime.
+        </p>
+        <div class="card-actions justify-center">
+          <button class="btn btn-success btn-lg" (click)="navigateToRegister()">
+            <span class="text-xl mr-2">🚀</span> Start Free Trial
+          </button>
+          <button class="btn btn-outline btn-lg" (click)="navigateToLogin()">
+            Sign In
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-4 justify-center mt-8 text-sm">
+          <div class="badge badge-success badge-lg gap-2">
+            ✓ 14-day free trial
+          </div>
+          <div class="badge badge-success badge-lg gap-2">
+            ✓ No credit card
+          </div>
+          <div class="badge badge-success badge-lg gap-2">
+            ✓ Cancel anytime
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer p-10 bg-neutral text-neutral-content">
+  <div>
+    <span class="text-4xl">⚡</span>
+    <p class="font-bold text-2xl text-orange-500">DevFlowFix</p>
+    <p>Autonomous CI/CD failure resolution powered by AI</p>
+    <div class="flex gap-4 mt-4">
+      <a class="btn btn-circle btn-sm btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="fill-current">
+          <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
+        </svg>
+      </a>
+      <a class="btn btn-circle btn-sm btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="fill-current">
+          <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+        </svg>
+      </a>
+      <a class="btn btn-circle btn-sm btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="fill-current">
+          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div>
+    <span class="footer-title">Product</span>
+    <a class="link link-hover" (click)="scrollToSection('features')">Features</a>
+    <a class="link link-hover" (click)="scrollToSection('how-it-works')">How It Works</a>
+    <a class="link link-hover" (click)="scrollToSection('integrations')">Integrations</a>
+    <a class="link link-hover">Pricing</a>
+  </div>
+  <div>
+    <span class="footer-title">Resources</span>
+    <a class="link link-hover">Documentation</a>
+    <a class="link link-hover">API Reference</a>
+    <a class="link link-hover">Blog</a>
+    <a class="link link-hover">Support</a>
+  </div>
+  <div>
+    <span class="footer-title">Company</span>
+    <a class="link link-hover">About</a>
+    <a class="link link-hover">Careers</a>
+    <a class="link link-hover">Contact</a>
+    <a class="link link-hover">Privacy</a>
+  </div>
+</footer>
+<footer class="footer footer-center p-4 bg-base-300 text-base-content">
+  <div>
+    <p>&copy; 2025 DevFlowFix. All rights reserved.</p>
+  </div>
+</footer>
