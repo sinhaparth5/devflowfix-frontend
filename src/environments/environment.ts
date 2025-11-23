@@ -1,12 +1,13 @@
 export const environment = {
-    production: true,
-    apiUrl: 'https://localhost:8000/api',
+    production: false,
+    apiUrl: 'http://localhost:8000/api/v1',
     appName: 'DevFlowFix',
     version: '1.0.0-dev',
 
     auth: {
-        tokenKey: 'auth_token',
+        tokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
+        tokenExpiry: 'token_expiry',
     },
 
     features: {
@@ -18,6 +19,14 @@ export const environment = {
         login: '/auth/login',
         register: '/auth/register',
         logout: '/auth/logout',
-        refreshToken: '/auth/refresh'
+        refresh: '/auth/refresh',
+        me: '/auth/me',
+        passwordChange: '/auth/password/change',
+        passwordResetRequest: '/auth/password/reset/request',
+        passwordResetConfirm: '/auth/password/reset/confirm',
+        sessions: '/auth/sessions',
+        mfaSetup: '/auth/mfa/setup',
+        mfaEnable: '/auth/mfa/enable',
+        mfaDisable: '/auth/mfa/disable',
     }
 }

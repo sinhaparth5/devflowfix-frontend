@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, Form } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NbAuthService, NbAuthResult, NbAuthToken } from '@nebular/auth';
 import {
   NbCardModule,
   NbInputModule,
@@ -12,7 +11,9 @@ import {
   NbIconModule,
   NbLayoutModule,
   NbToastrService,
+  NbSpinnerModule,
 } from '@nebular/theme';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,7 @@ import {
     NbAlertModule,
     NbIconModule,
     NbLayoutModule,
+    NbSpinnerModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -42,12 +44,18 @@ export class Login implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: NbAuthService,
+    private authService: AuthService,
     private router: Router,
     private toastrService: NbToastrService
   ) {}
 
   ngOnInit(): void {
+    // Redirect if already authenticated
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+      return;
+    }
+
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -85,31 +93,40 @@ export class Login implements OnInit {
 
     this.loading = true;
 
-    this.authService
-      .authenticate('email', this.loginForm.value)
-      .subscribe({
-        next: (result: NbAuthResult) => {
-          this.loading = false;
-          if (result.isSuccess()) {
-            this.messages = result.getMessages();
-            this.toastrService.success('Login successful!', 'Success');
-            this.router.navigate(['/dashboard']);
-          } else {
-            this.errors = result.getErrors();
-            this.toastrService.danger(
-              this.errors.join(', ') || 'Login failed',
-              'Error'
-            );
-          }
-        },
-        error: (err) => {
-          this.loading = false;
-          this.errors = ['An error occurred during login. Please try again.'];
-          this.toastrService.danger(
-            'An error occurred during login',
-            'Error'
-          );
-        },
-      });
+    const loginData = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    };
+
+    this.authService.login(loginData).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.messages = ['Login successful!'];
+        this.toastrService.success(
+          `Welcome back, ${response.user.full_name}!`,
+          'Success'
+        );
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.loading = false;
+        
+        // Handle different error responses
+        if (err.status === 401) {
+          this.errors = [err.error?.detail || 'Invalid email or password'];
+        } else if (err.status === 423) {
+          this.errors = [err.error?.detail || 'Account is locked. Please try again later.'];
+        } else if (err.status === 0) {
+          this.errors = ['Unable to connect to server. Please check your connection.'];
+        } else {
+          this.errors = [err.error?.detail || 'An error occurred during login. Please try again.'];
+        }
+        
+        this.toastrService.danger(
+          this.errors[0],
+          'Login Failed'
+        );
+      },
+    });
   }
 }

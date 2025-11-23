@@ -4,27 +4,54 @@
   justify-content: center;
   min-height: 100vh;
   padding: 2rem 1rem;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%);
 }
 
 .auth-container nb-card {
   max-width: 450px;
   width: 100%;
   margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(249, 115, 22, 0.15);
+  border: 1px solid #fed7aa;
 }
 
 nb-card-header {
   text-align: center;
   padding: 2rem 2rem 1rem;
+  background: transparent;
+  border-bottom: 1px solid #ffedd5;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-icon {
+  font-size: 2rem;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ea580c;
 }
 
 nb-card-header .title {
   margin-bottom: 0.5rem;
   font-weight: 700;
+  font-size: 1.5rem;
+  color: #1a1a1a;
 }
 
 nb-card-header .sub-title {
-  color: #8f9bb3;
+  color: #6b7280;
   margin-bottom: 0;
+  font-size: 0.875rem;
 }
 
 nb-card-body {
@@ -32,7 +59,7 @@ nb-card-body {
 }
 
 .form-control-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   position: relative;
 }
 
@@ -41,25 +68,75 @@ nb-card-body {
   margin-bottom: 0.5rem;
   font-weight: 600;
   font-size: 0.875rem;
+  color: #374151;
 }
 
-.form-control-group .toggle-password {
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper input {
+  padding-right: 3rem;
+}
+
+.toggle-password {
   position: absolute;
   right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
   padding: 0.5rem;
   cursor: pointer;
   background: transparent;
   border: none;
+  color: #6b7280;
 }
 
-.form-control-group .toggle-password nb-icon {
+.toggle-password:hover {
+  color: #ea580c;
+}
+
+.toggle-password nb-icon {
   font-size: 1.25rem;
 }
 
 .alert-message {
   font-size: 0.8125rem;
   margin-top: 0.5rem;
-  color: #ff3d71;
+  color: #dc2626;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.strength-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 0.25rem;
+}
+
+.strength-item:last-child {
+  margin-bottom: 0;
+}
+
+.strength-item nb-icon {
+  font-size: 1rem;
+}
+
+.strength-item.valid {
+  color: #16a34a;
+}
+
+.strength-item.valid nb-icon {
+  color: #16a34a;
 }
 
 .accept-group {
@@ -68,9 +145,9 @@ nb-card-body {
 }
 
 .accept-group .text-link {
-  color: #3366ff;
+  color: #ea580c;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .accept-group .text-link:hover {
@@ -80,39 +157,80 @@ nb-card-body {
 .accept-group .alert-message {
   margin-left: 0;
   padding-left: 0;
+  margin-top: 0.5rem;
 }
 
-button[nbButton] {
-  text-transform: uppercase;
+/* Override Nebular button styles for orange theme */
+::ng-deep button[nbButton][status="warning"] {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  border: none;
   font-weight: 600;
   letter-spacing: 0.5px;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-button[nbButton].btn-pulse {
-  animation: pulse 1.5s infinite;
+::ng-deep button[nbButton][status="warning"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
 }
 
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
+::ng-deep button[nbButton][status="warning"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Override Nebular input styles */
+::ng-deep nb-form-field input[nbInput] {
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 0.875rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+::ng-deep nb-form-field input[nbInput]:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+::ng-deep input[nbInput][status="danger"] {
+  border-color: #dc2626;
+}
+
+::ng-deep input[nbInput][status="success"] {
+  border-color: #16a34a;
+}
+
+/* Override Nebular checkbox */
+::ng-deep nb-checkbox .custom-checkbox {
+  border-color: #d1d5db;
+}
+
+::ng-deep nb-checkbox .custom-checkbox.checked {
+  background-color: #f97316;
+  border-color: #f97316;
+}
+
+::ng-deep nb-checkbox .text {
+  font-size: 0.875rem;
+  color: #4b5563;
 }
 
 .another-action {
   text-align: center;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #edf1f7;
+  border-top: 1px solid #f3f4f6;
+  color: #6b7280;
+  font-size: 0.9rem;
 }
 
 .another-action .text-link {
-  color: #3366ff;
+  color: #ea580c;
   text-decoration: none;
   font-weight: 600;
 }
@@ -121,8 +239,22 @@ button[nbButton].btn-pulse {
   text-decoration: underline;
 }
 
-nb-alert {
+/* Alert styles */
+::ng-deep nb-alert {
   margin-bottom: 1.5rem;
+  border-radius: 8px;
+}
+
+::ng-deep nb-alert[status="danger"] {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+::ng-deep nb-alert[status="success"] {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
 }
 
 /* Responsive adjustments */
@@ -133,6 +265,7 @@ nb-alert {
 
   .auth-container nb-card {
     max-width: 100%;
+    border-radius: 12px;
   }
 
   nb-card-header {
@@ -141,5 +274,13 @@ nb-alert {
 
   nb-card-body {
     padding: 1.5rem 1rem;
+  }
+
+  .password-strength {
+    padding: 0.5rem;
+  }
+
+  .strength-item {
+    font-size: 0.7rem;
   }
 }

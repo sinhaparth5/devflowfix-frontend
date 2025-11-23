@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NbAuthService, NbAuthResult } from '@nebular/auth';
 import {
   NbCardModule,
   NbInputModule,
@@ -12,7 +11,9 @@ import {
   NbIconModule,
   NbLayoutModule,
   NbToastrService,
-} from '@nebular/theme'
+  NbSpinnerModule,
+} from '@nebular/theme';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -28,6 +29,7 @@ import {
     NbAlertModule,
     NbIconModule,
     NbLayoutModule,
+    NbSpinnerModule,
   ],
   templateUrl: './register.html',
   styleUrl: './register.css',
@@ -41,19 +43,34 @@ export class Register implements OnInit {
   errors: string[] = [];
   messages: string[] = [];
 
+  // Password strength indicators
+  passwordStrength = {
+    hasMinLength: false,
+    hasUppercase: false,
+    hasLowercase: false,
+    hasNumber: false,
+    hasSpecial: false,
+  };
+
   constructor(
     private formBuilder: FormBuilder,
-    private authService: NbAuthService,
+    private authService: AuthService,
     private router: Router,
     private toastrService: NbToastrService
   ) {}
 
   ngOnInit(): void {
+    // Redirect if already authenticated
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+      return;
+    }
+
     this.registerForm = this.formBuilder.group(
       {
         fullName: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator.bind(this)]],
         confirmPassword: ['', [Validators.required]],
         agreeTerms: [false, [Validators.requiredTrue]],
       },
@@ -61,10 +78,42 @@ export class Register implements OnInit {
         validators: this.passwordMatchValidator,
       }
     );
+
+    // Watch password changes for strength indicator
+    this.registerForm.get('password')?.valueChanges.subscribe(value => {
+      this.updatePasswordStrength(value);
+    });
   }
 
   get f() {
     return this.registerForm.controls;
+  }
+
+  passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUppercase = /[A-Z]/.test(value);
+    const hasLowercase = /[a-z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+    const valid = hasUppercase && hasLowercase && hasNumber && hasSpecial;
+
+    if (!valid) {
+      return { passwordStrength: true };
+    }
+    return null;
+  }
+
+  updatePasswordStrength(password: string): void {
+    this.passwordStrength = {
+      hasMinLength: password?.length >= 8,
+      hasUppercase: /[A-Z]/.test(password || ''),
+      hasLowercase: /[a-z]/.test(password || ''),
+      hasNumber: /[0-9]/.test(password || ''),
+      hasSpecial: /[!@#$%^&*(),.?":{}|<>]/.test(password || ''),
+    };
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -93,7 +142,7 @@ export class Register implements OnInit {
     if (field?.invalid && (field?.dirty || field?.touched || this.submitted)) {
       return 'danger';
     }
-    if (field?.valid && (field?.dirty ?? field?.touched )) {
+    if (field?.valid && (field?.dirty || field?.touched)) {
       return 'success';
     }
     return 'basic';
@@ -118,36 +167,42 @@ export class Register implements OnInit {
 
     this.loading = true;
 
-    const { confirmPassword, agreeTerms, ...registerData } = this.registerForm.value;
+    const registerData = {
+      full_name: this.registerForm.value.fullName,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+    };
 
-    this.authService
-      .register('email', registerData)
-      .subscribe({
-        next: (result: NbAuthResult) => {
-          this.loading = false;
-          if (result.isSuccess()) {
-            this.messages = result.getMessages();
-            this.toastrService.success(
-              'Registration successful! Please login in.',
-              'Success'
-            );
-            this.router.navigate(['/auth/login']);
-          } else {
-            this.errors = result.getErrors();
-            this.toastrService.danger(
-              this.errors.join(', ') || 'Registration failed',
-              'Error'
-            );
-          }
-        },
-        error: (err) => {
-          this.loading = false;
-          this.errors = ['An error occurred during registration. Please try again.'];
-          this.toastrService.danger(
-            'An error occurred during registration',
-            'Error'
-          )
+    this.authService.register(registerData).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.messages = ['Registration successful! Please log in.'];
+        this.toastrService.success(
+          'Your account has been created successfully!',
+          'Welcome to DevFlowFix'
+        );
+        // Redirect to login after short delay
+        setTimeout(() => {
+          this.router.navigate(['/auth/login']);
+        }, 1500);
+      },
+      error: (err) => {
+        this.loading = false;
+        
+        // Handle different error responses
+        if (err.status === 400) {
+          this.errors = [err.error?.detail || 'Email already exists or invalid data'];
+        } else if (err.status === 0) {
+          this.errors = ['Unable to connect to server. Please check your connection.'];
+        } else {
+          this.errors = [err.error?.detail || 'An error occurred during registration. Please try again.'];
         }
-      })
+        
+        this.toastrService.danger(
+          this.errors[0],
+          'Registration Failed'
+        );
+      },
+    });
   }
 }
