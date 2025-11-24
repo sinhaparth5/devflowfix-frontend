@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.devflowfix.com/api/v1', // Update with your production URL
+    apiUrl: 'https://devflowfix-new-production.up.railway.app/api/v1', // Update with your production URL
     appName: 'DevFlowFix',
     version: '1.0.0',
 
