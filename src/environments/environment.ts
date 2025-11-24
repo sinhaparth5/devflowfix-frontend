@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:8000/api/v1',
+    apiUrl: 'https://devflowfix-new-production.up.railway.app/api/v1',
     appName: 'DevFlowFix',
     version: '1.0.0-dev',
 
